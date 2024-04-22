@@ -2,99 +2,94 @@
 
 ## Broadcast Package
 
-The following table describes the SCAN RSP AD Structure.
+The following table describes the Service Data of SCAN_RSP.
 <table>
-	<tr>
-		<td>Byte 0</td>
-		<td></td>
-		<td>0x09</td>
-	</tr>
-  <tr>
-		<td>Byte 1</td>
-		<td>Service Data</td>
-		<td>0x16</td>
-	</tr>
-  <tr>
-		<td>Byte 2~3</td>
-		<td></td>
-		<td>0xFD3D</td>
-	</tr>
-  <tr>
-		<td rowspan=2>Byte 4</td>
-		<td>EncLsb</td>
-		<td>Bit [7] – Encryption method low bit
-0: No encryption<br>
-1: Encryption method 1 (same as Bot's encryption method) when Byte 1 bit[5]-Enc type = 1<br>
-0: Encryption method 2 (specific algorithm to be determined)<br>
-1: Encryption method 3 (specific algorithm to be determined)</td>
-	</tr>
-	<tr>
-		<td>Device Type</td>
-		<td>Bit 6-0 Device Type<br>(0x5B): Add mode<br>(0x7B): Broadcast mode</td>
-	</tr>
-	<tr>
-		<td rowspan=5>Byte 5</td>
-		<td rowspan=5>Status</td>
-		<td>Bit [7] – Allow connection: 1 - Allowed (host), 0 - Not allowed (slave)</td>
-	</tr>
-	<tr>
-		<td>Bit [6] - Calibration status: 1 - Calibrated, 0 - Not calibrated, needs calibration</td>
-	</tr>
-  <tr>
-		<td>Bit [5] - Enc type Msb<br>0: Original bot encryption algorithm<br>1: New encryption method 2 or encryption method 3, refer to the explanation of Byte 0 bit[7]</td>
-	</tr>
-  <tr>
-		<td>Bit [4] - Data commit flag<br>0: Service data, no data need to commit<br>1: Service data has data need to commit. This flag needs to be cleared by the hub or APP after the data is updated successfully. The device itself does not clear it actively</td>
-	</tr>
-  <tr>
-		<td>Bit [3] - group D<br>Bit [2] - group C<br>Bit [1] - group B<br>Bit [0] - group A<br>0: Device is not in the current group<br>1: Device is in the current group</td>
-	</tr>
-  <tr>
-		<td rowspan=2>Byte 6</td>
-		<td>update utc flag</td>
-		<td>Bit [7] – Sync utc<br>0: No need to synchronize time<br>1: Device has gone through one time synchronization period (default is 10 days), need to perform time synchronization. The running time is in UTC when synchronization is performed. When the hub or APP successfully timestamps the device, the device itself actively clears this flag</td>
-	</tr>
-  <tr>
-		<td>Battery</td>
-		<td>Bit [6:0] – Battery level 0~100%</td>
-	</tr>
-  <tr>
-		<td rowspan=2>Byte 7</td>
-		<td>MotionState</td>
-		<td>Bit [7] - Motion state<br>0: Static<br>1: In motion</td>
-	</tr>
-  <tr>
-		<td>Position</td>
-		<td>Bit [6:0] - Current position of the device (%)</td>
-	</tr>
-  <tr>
-		<td rowspan=2>Byte 8</td>
-		<td>LightLevel</td>
-		<td>Bit [7:4] - Light level (1-10)</td>
-	</tr>
-  <tr>
-		<td>DeviceChain</td>
-		<td>Bit [3:0] - Device chain length</td>
-	</tr>
-  <tr>
-		<td rowspan=4>Byte 9</td>
-		<td>CrashType</td>
-		<td>Bit [7:6] - Saved crash log type</td>
-	</tr>
-  <tr>
-		<td>MotorFault</td>
-		<td>Bit [5] - Whether the motor clutch is abnormal<br>1: Abnormal<br>0: Normal</td>
-	</tr>
-  <tr>
-		<td>HallFault</td>
-		<td>Bit [4] - Whether the Hall signal is abnormal<br>1: Abnormal<br>0: Normal</td>
-	</tr>
-  <tr>
-		<td>StopReason</td>
-		<td>Bit [3:0] - Motor movement stop reason<br>0: None<br>1: Motor movement time exceeded 10 minutes<br>2: No Hall counting in 1 second<br>3: Excessive stalling current<br>4: Movement to target position<br>5: Received stop command<br>6: Detected magnetic field strength meets conditions</td>
-		<td></td>
-	</tr>
+  <thead>
+    <th colspan=5>SCAN RSP AD Structure</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan=20>AD Structure 1</td>
+      <td>len</td>
+      <td>Byte 0</td>
+      <td></td>
+      <td>0x09</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>Byte 1</td>
+      <td>Service Data</td>
+      <td>0x16</td>
+    </tr>
+    <tr>
+      <td rowspan=18>data</td>
+      <td>Byte 2~3</td>
+      <td></td>
+      <td>0xFD3D</td>
+    </tr>
+    <tr>
+      <td rowspan=2>Byte 4</td>
+      <td>Enc type</td>
+      <td>Bit[7] NC</td>
+    </tr>
+    <tr>
+      <td>Device Type</td>
+      <td>Bit [6:0] – Device Type, <br>‘[’Const Adv Mode, <br>‘{’Pair Mode</td>
+    </tr>
+    <tr>
+      <td rowspan=5>Byte 5</td>
+      <td rowspan=3>Status</td>
+      <td>Bit [7] – Whether to allow connection <br>1- allowed, 0- not allowed</td>
+    </tr>
+    <tr>
+      <td>Bit [6] – Calibration situation<br>1-calibrated, 0-not calibrated, need to be calibrated</td>
+    </tr>
+    <tr>
+      <td>Bit [5-0] NC</td>
+    </tr>
+    <tr>
+      <td>Update utc flag</td>
+      <td>Bit[7] NC</td>
+    </tr>
+    <tr>
+      <td>Battery</td>
+      <td>Bit [6:0] – Battery capacity 0~100%</td>
+    </tr>
+    <tr>
+      <td rowspan=2>Byte 6</td>
+      <td>MotionState</td>
+      <td>bit [7] - Movement status, 0-stationary, 1-movement</td>
+    </tr>
+    <tr>
+      <td>Position</td>
+      <td>Bit [6:0] - The current position of the device (%)</td>
+    </tr>
+    <tr>
+      <td rowspan=2>Byte 7</td>
+      <td>LightLevel</td>
+      <td>bit [7:4] - Light level (1-10)</td>
+    </tr>
+    <tr>
+      <td>DeviceChain</td>
+      <td>bit [3:0] - Device chain length</td>
+    </tr>
+    <tr>
+      <td rowspan=2>Byte 8</td>
+      <td>LightLevel</td>
+      <td>bit [7:4]-light level(1-10)</td>
+    </tr>
+    <tr>
+      <td>DeviceChain</td>
+      <td>bit [3:0] - Device chain length</td>
+    </tr>
+    <tr>
+      <td>Byte 9</td>
+      <td>CrashType</td>
+      <td>bit [7:0]-NC</td>
+    </tr>
+  </tbody>
 </table>
+
 <a><img src="https://switchbot-open-api.s3.amazonaws.com/Curtain+BLE+open+api/curtain3-broadcast-1.jpeg"></a>
 
 
@@ -253,7 +248,7 @@ The basic format of the RSP packet returned by the device to the terminal is as 
         </tr>
     </tbody>
 </table>
-- REQ Packet不同命令返回值不同。
+- REQ Packet returns different values with different commands.
 
 <table>
     <thead>
@@ -303,7 +298,7 @@ The basic format of the RSP packet returned by the device to the terminal is as 
     <th colspan=1>Function Code</th>
     <th colspan=1>Function Parameter Code</th>
     <th colspan=2>REQ Packet Payload</th>
-    <th colspan=16>RSP Packet</th>
+    <th colspan=8>RSP Packet</th>
   </tr>
 </thead>
 <tbody>
@@ -320,14 +315,6 @@ The basic format of the RSP packet returned by the device to the terminal is as 
     <td rowspan=1>Byte: 5</td>
     <td rowspan=1>Byte: 6</td>
     <td rowspan=1>Byte: 7</td>
-    <td rowspan=1>Byte: 8</td>
-    <td rowspan=1>Byte: 9</td>
-    <td rowspan=1>Byte: 10</td>
-    <td rowspan=1>Byte: 11</td>
-    <td rowspan=1>Byte: 12</td>
-    <td rowspan=1>Byte: 13</td>
-    <td rowspan=1>Byte: 14</td>
-    <td rowspan=1>Byte: 15~19</td>
   </tr>
   <tr>
     <td rowspan=2>0x04-Basic attributes</td>
@@ -337,14 +324,6 @@ The basic format of the RSP packet returned by the device to the terminal is as 
     <td rowspan=3>Command Status</td>
     <td rowspan=1>Device 0 bit7-direction, 0: default, 1: reverse bit6-touch and go, 0: disable, 1: enable bit5-light sensor, 0: disable, 1: enable bit4-reserved bit3-window mode, 0-window to the left, 1-window to the right bit2:0-reserved</td>
     <td rowspan=1>Device 1 bit7-direction, 0: default (open to the left), 1: reverse bit6-touch and go, 0: disable, 1: enable bit5-light sensor 0: disable, 1: enable bit4-reserved bit3-window mode, 0-open window to the left, 1-open window to the right bit2:0-reserved</td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
     <td rowspan=1></td>
     <td rowspan=1></td>
     <td rowspan=1></td>
@@ -362,14 +341,6 @@ The basic format of the RSP packet returned by the device to the terminal is as 
     <td rowspan=1>Device 1 Firmware version</td>
     <td rowspan=1>Device 1 State of charge A</td>
     <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
 	</tr>
   <tr>
     <td rowspan=1>0x81-Command status</td>
@@ -383,14 +354,6 @@ The basic format of the RSP packet returned by the device to the terminal is as 
     <td rowspan=1>bit7-charing or not, 0-not charging, 1-charging; bit6:0-device 0's current battery level</td>
     <td rowspan=1>bit7-solar panel connected or not, 0-not connected, 1- connected; bit6:0-device 1's current location</td>
     <td rowspan=1>bit7-charing or not, 0-not charging, 1-charging; bit6:0-device 1's current battery level</td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
-    <td rowspan=1></td>
   </tr>
 </tbody>
 </table>
