@@ -20,7 +20,7 @@
 | Meter           | T (0x54)    |
 | Humidifier      | e (0x65)    |
 | Curtain         | c (0x63)    |
-| Curtain 3       |             |
+| Curtain 3       | {(0x7B)     |
 | Motion Sensor   | s (0x73)    |
 | Contact Sensor  | d (0x64)    |
 | Color Bulb      | u (0x75)    |
